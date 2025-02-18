@@ -1,0 +1,11 @@
+s+			session
+scd		command-prompt -I "#{pane_current_path}" -p '(working directory)' 'attach-session -c "%%"'	change working directory
+sn		command-prompt 'new-session -A -s "%%" -c ~'	new
+srm		run-shell 'tmux switch-client -n \; kill-session -t "$(tmux display-message -p "#S")" || tmux kill-session'	kill current
+srn		command-prompt 'rename-session "%%"'	rename
+ss		choose-tree -Zs	menu
+w+	󰓩		window
+wn	󰝜	new-window	new
+wrm	󰭌	kill-window	kill window
+wrn	󰓩	command-prompt 'rename-window "%%"'	rename-window
+ww	󰓩	choose-tree -Zw	menu

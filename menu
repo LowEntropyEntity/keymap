@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# usage: menu [<file>]
+# file format: shortcut <tab> command <tab> description
+# if command is empty, it's treated as a group and used only for display purposes
+
+# first arg or hard-coded
+SHORTCUTS_FILE="${1:-./map.txt}"
+
+if [ ! -f "$SHORTCUTS_FILE" ]; then
+	echo "not found: $SHORTCUTS_FILE" >&2
+	exit 1
+fi
+
+selected_line="$(
+	fzf \
+		--query=^ \
+		--exact \
+		--no-ignore-case \
+		--no-multi \
+		--bind='one:accept,zero:abort' \
+		--with-nth=1 \
+		--delimiter='\t' \
+		--preview='echo {2} {1} {4}' \
+		--no-sort \
+		--tmux center,border-native \
+		--reverse \
+		< "$SHORTCUTS_FILE"
+)"
+
+if [ -z "$selected_line" ]; then
+	exit 1
+fi
+
+shortcut="$(echo "$selected_line" | cut -f1)"
+command="$(echo "$selected_line" | cut -f2)"
+
+# eval "tmux $command"
+echo "$command"
