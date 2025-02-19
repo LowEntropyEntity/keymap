@@ -33,7 +33,7 @@ if [ -z "$selected_line" ]; then
 fi
 
 shortcut="$(echo "$selected_line" | cut -f1)"
-command="$(echo "$selected_line" | cut -f2)"
+command="$(echo "$selected_line" | cut -f3)"
 
 # eval "tmux $command"
 echo "$command"
